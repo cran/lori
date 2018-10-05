@@ -63,6 +63,8 @@ altmin <- function(Y, lambda1, lambda2, cov = NULL, rank.max=10, thresh = 1e-6, 
     alpmat <- matrix(cov%*%alpha, nrow = n)
     flag <- TRUE
     grad_theta <- (- Y2 + exp(mu + alpmat + theta))/m
+    grad_theta <- sweep(grad_theta, 2, colMeans(grad_theta))
+    grad_theta <- sweep(grad_theta, 1, rowMeans(grad_theta))
     step <- 1
     number <-  sum(- Y*(mu +alpmat+theta) + exp(mu +alpmat+theta), na.rm =T)/m + lambda1 * sum(d.tmp) + lambda2*sum(abs(alpha))
     while(flag){
@@ -163,14 +165,14 @@ lori <- function(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, thresh = 1e-5,
   if(is.null(lambda2)){
     print("computing regularization parameter 1")
     lambda2 <- cv.glmnet(cov[!is.na(ymis), ], ymis[!is.na(ymis)], family="poisson")$lambda.min
-    lambda1tmp <- qut(Y, lambda2, cov)
+    lambda1tmp <- qut(Y, cov, lambda2)
     th <- lori(Y,cov,lambda1tmp,1e5, trace.it=F, plots=F,maxit=maxit)$theta
     lambda2 <- cv.glmnet(cov[!is.na(ymis), ], ymis[!is.na(ymis)], family="poisson",
                          offset=c(th)[!is.na(ymis)])$lambda.min
   }
   if(is.null(lambda1)){
     print("computing regularization parameter 2")
-    lambda1 <- qut(Y, lambda2, cov)
+    lambda1 <- qut(Y, cov, lambda2)
   }
   if(is.null(lambda1.max)) lambda1.max <- 1e3*(lambda1+1e-6)
   if(is.null(lambda2.max)) lambda2.max <- 1e3*(lambda2+1e-6)

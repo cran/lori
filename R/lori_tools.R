@@ -69,8 +69,7 @@ covmatC <- function(C, n){
   return(covs)
 }
 
-#' Computes the threshold $lambda_{QUT}$ with parametric bootstrap when covariates are available.
-#' If you don't have any covariates, use the function \code{lambda_QUT} which will be significantly faster.
+#' Automatic selection of nuclear norm regularization parameter
 #' @param Y A matrix of counts (contingency table).
 #' @param covmat A (np)xK matrix of K covariates about rows and columns
 #' @param lambda2 A positive number, the regularization parameter for covariates main effects
