@@ -13,7 +13,7 @@
 #' Y[sample(1:9, 2)] <- NA
 #' cov <- matrix(rnorm(18), nrow=9)
 #' colnames(cov) <- c("cov1","cov2")
-#' res <- lori(Y,cov,1,1,rank.max=2,maxit=1,size=2)
+#' res <- lori(Y,cov,1,1,rank.max=2,maxit=1)
 #' plot_cov(res)
 plot_cov <- function(res_lori){
   plot.new()
@@ -55,7 +55,7 @@ plot_cov <- function(res_lori){
 #' Y[sample(1:9, 2)] <- NA
 #' cov <- matrix(rnorm(18), nrow=9)
 #' colnames(cov) <- c("cov1","cov2")
-#' res <- lori(Y,cov,1,1,rank.max=2,maxit=1,size=2)
+#' res <- lori(Y,cov,1,1,rank.max=2,maxit=1)
 #' plot_counts(res, r.cov=1:2)
 plot_counts <- function(res_lori, r.cov =NULL, c.cov=NULL, rc.cov=NULL){
   cov <- as.matrix(res_lori$cov)

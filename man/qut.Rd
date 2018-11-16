@@ -2,8 +2,7 @@
 % Please edit documentation in R/lori_tools.R
 \name{qut}
 \alias{qut}
-\title{Computes the threshold $lambda_{QUT}$ with parametric bootstrap when covariates are available.
-If you don't have any covariates, use the function \code{lambda_QUT} which will be significantly faster.}
+\title{Automatic selection of nuclear norm regularization parameter}
 \usage{
 qut(Y, covmat, lambda2 = 0, q = 0.95, N = 100)
 }
@@ -22,8 +21,7 @@ qut(Y, covmat, lambda2 = 0, q = 0.95, N = 100)
 the value of $lambda_{QUT}$ to use in LoRI.
 }
 \description{
-Computes the threshold $lambda_{QUT}$ with parametric bootstrap when covariates are available.
-If you don't have any covariates, use the function \code{lambda_QUT} which will be significantly faster.
+Automatic selection of nuclear norm regularization parameter
 }
 \examples{
 X = matrix(rnorm(30), 15)

@@ -5,9 +5,8 @@
 \title{LORI method.}
 \usage{
 lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, thresh = 1e-05,
-  maxit = 1000, lambda1.max = NULL, lambda2.max = NULL, size = 100,
-  trace.it = F, rank.max = 10, plots = F, r.cov = NULL, c.cov = NULL,
-  rc.cov = NULL, spe_time = T)
+  maxit = 1000, trace.it = F, rank.max = 2, plots = F,
+  r.cov = NULL, c.cov = NULL, rc.cov = NULL, spe_time = T)
 }
 \arguments{
 \item{Y}{A matrix of counts (nxp).}
@@ -21,12 +20,6 @@ lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, thresh = 1e-05,
 \item{thresh}{A number, convergence tolerance of algorithm, by default \code{1e-6}.}
 
 \item{maxit}{An integer, maximum allowed number of iterations.}
-
-\item{lambda1.max}{A positive number, maximum regularization parameter for the interaction matrix.}
-
-\item{lambda2.max}{A positive number, maximum regularization parameter for the covariate effects.}
-
-\item{size}{An integer,size of warm start grid}
 
 \item{trace.it}{A boolean, whether convergence information should be printed}
 
@@ -50,12 +43,6 @@ A list with the following elements
 \item{theta}{nxp matrix of row-column interactions}
 \item{imputed}{nxp matrix of imputed counts}
 \item{means}{nxp matrix of expected counts (exp(X))}
-\item{list.X}{list of matrices of log of expected counts (same length as grid of lambda)}
-\item{list.mu}{list of offsets (same length as grid of lambda)}
-\item{list.alpha}{list of regression parameters (same length as grid of lambda)}
-\item{list.theta}{list of interaction matrices (same length as grid of lambda)}
-\item{lambda1.grid}{vector of lambda1 values used for warm-start}
-\item{lambda2.grid}{vector of lambda2 values used for warm-start}
 \item{cov}{npxK matrix of covariates}
 }
 \description{
@@ -65,6 +52,6 @@ LORI method.
 \dontshow{
 X <- matrix(rnorm(50), 25)
 Y <- matrix(rpois(25, 1:25), 5)
-res <- lori(Y, X, 10, 10, size=2)
+res <- lori(Y, X, 10, 10)
 }
 }

@@ -4,9 +4,9 @@
 \alias{altmin}
 \title{Estimation algorithm for the LoRI parameters.}
 \usage{
-altmin(Y, lambda1, lambda2, cov = NULL, rank.max = 10, thresh = 1e-06,
+altmin(Y, lambda1, lambda2, cov = NULL, rank.max = 2, thresh = 1e-06,
   maxit = 1000, mu_init = 0, alpha_init = NULL, theta_init = NULL,
-  trace.it = T, iter = NULL, iter.max = NULL)
+  trace.it = T)
 }
 \arguments{
 \item{Y}{A matrix of counts (nxp).}
@@ -30,10 +30,6 @@ altmin(Y, lambda1, lambda2, cov = NULL, rank.max = 10, thresh = 1e-06,
 \item{theta_init}{An nxp matrix, initial value of the interactions.}
 
 \item{trace.it}{A boolean, whether convergence information should be printed}
-
-\item{iter}{An integer, current iteration in warm start, used for display only (don't change)}
-
-\item{iter.max}{An integer, maximum iteration in warm start, used for display only (don't change)}
 }
 \description{
 Estimation algorithm for the LoRI parameters.
