@@ -4,42 +4,37 @@
 \alias{lori}
 \title{LORI method.}
 \usage{
-lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, thresh = 1e-05,
-  maxit = 1000, trace.it = F, rank.max = 2, plots = F,
-  r.cov = NULL, c.cov = NULL, rc.cov = NULL, spe_time = T)
+lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, reff = T,
+  ceff = T, rank.max = 5, thresh = 1e-05, maxit = 1000,
+  trace.it = F)
 }
 \arguments{
-\item{Y}{A matrix of counts (nxp).}
+\item{Y}{[matrix, data.frame] count table (nxp).}
 
-\item{cov}{A matrix of row and column covariates (np*K1) in order row1xcol1,row2xcol2,..,rownxcol1,row1xcol2,row2xcol2,...,...,rownxcolp}
+\item{cov}{[matrix, data.frame] design matrix (np*q) in order row1xcol1,row2xcol2,..,rownxcol1,row1xcol2,row2xcol2,...,...,rownxcolp}
 
-\item{lambda1}{A positive number, the regularization parameter for the interaction matrix.}
+\item{lambda1}{[positive number] the regularization parameter for the interaction matrix.}
 
-\item{lambda2}{A positive number, the regularization parameter for the covariate effects.}
+\item{lambda2}{[positive number] the regularization parameter for the covariate effects.}
 
-\item{thresh}{A number, convergence tolerance of algorithm, by default \code{1e-6}.}
+\item{reff}{[boolean] whether row effects should be fitted, default value is TRUE}
 
-\item{maxit}{An integer, maximum allowed number of iterations.}
+\item{ceff}{[boolean] whether column effects should be fitted, default value is TRUE}
 
-\item{trace.it}{A boolean, whether convergence information should be printed}
+\item{rank.max}{[integer] maximum rank of interaction matrix (smaller than min(n-1,p-1))}
 
-\item{rank.max}{An integer, maximum rank of interaction matrix (smaller than min(n-1,p-1))}
+\item{thresh}{[positive number] convergence tolerance of algorithm, by default \code{1e-6}.}
 
-\item{plots}{A boolean indicating whether graphical displays should be returned}
+\item{maxit}{[integer] maximum allowed number of iterations.}
 
-\item{r.cov}{a vector of indices indicating the indices of the row covariates}
-
-\item{c.cov}{a vector of indices indicating the indices of the column covariates}
-
-\item{rc.cov}{a vector of indices indicating the indices of the row-column covariates}
-
-\item{spe_time}{a boolean indicating whether columns of Y are temporal (months, years, etc.)}
+\item{trace.it}{[boolean] whether convergence information should be printed}
 }
 \value{
 A list with the following elements
 \item{X}{nxp matrix of log of expected counts}
-\item{mu}{intercept}
-\item{alpha}{coefficients of covariates}
+\item{alpha}{row effects}
+\item{beta}{column effects}
+\item{epsilon}{covariate effects}
 \item{theta}{nxp matrix of row-column interactions}
 \item{imputed}{nxp matrix of imputed counts}
 \item{means}{nxp matrix of expected counts (exp(X))}

@@ -4,12 +4,12 @@
 \alias{qut}
 \title{Automatic selection of nuclear norm regularization parameter}
 \usage{
-qut(Y, covmat, lambda2 = 0, q = 0.95, N = 100)
+qut(Y, cov, lambda2 = 0, q = 0.95, N = 100)
 }
 \arguments{
 \item{Y}{A matrix of counts (contingency table).}
 
-\item{covmat}{A (np)xK matrix of K covariates about rows and columns}
+\item{cov}{A (np)xK matrix of K covariates about rows and columns}
 
 \item{lambda2}{A positive number, the regularization parameter for covariates main effects}
 

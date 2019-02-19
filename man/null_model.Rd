@@ -2,37 +2,35 @@
 % Please edit documentation in R/lori.R
 \name{null_model}
 \alias{null_model}
-\title{null_model}
+\title{Estimation algorithm for the LORI parameters without interactions.}
 \usage{
 null_model(Y, lambda2, cov = NULL, thresh = 1e-06, maxit = 1000,
-  trace.it = F)
+  trace.it = T, reff = T, ceff = T)
 }
 \arguments{
-\item{Y}{nxp count matrix}
+\item{Y}{[matrix, data.frame] count table (nxp).}
 
-\item{lambda2}{regularization parameter}
+\item{lambda2}{[positive number] the regularization parameter for the covariate effects.}
 
-\item{cov}{npxK matrix of covariates}
+\item{cov}{[matrix, data.frame] design matrix (np*q) in order row1xcol1,row2xcol2,..,rownxcol1,row1xcol2,row2xcol2,...,...,rownxcolp}
 
-\item{thresh}{convergence threshold}
+\item{thresh}{[positive number] convergence tolerance of algorithm, by default \code{1e-6}.}
 
-\item{maxit}{maximum number of iterations}
+\item{maxit}{[integer] maximum allowed number of iterations.}
 
-\item{trace.it}{boolean indicating whether information about convergence should be displayed}
-}
-\value{
-A list with the following elements
-\item{X}{nxp matrix of log of expected counts}
-\item{mu}{intercept}
-\item{alpha}{coefficients of covariates}
+\item{trace.it}{[boolean] whether convergence information should be printed}
+
+\item{reff}{[boolean] whether row effects should be fitted, default value is TRUE}
+
+\item{ceff}{[boolean] whether column effects should be fitted, default value is TRUE}
 }
 \description{
-null_model
+Estimation algorithm for the LORI parameters without interactions.
 }
 \examples{
-\dontshow{
-X <- matrix(rnorm(50), 25)
+\dontrun{
+X = matrix(rnorm(50), 25)
 Y <- matrix(rpois(25, 1:25), 5)
-res <- null_model(Y, 10, X)
+res <- null_model(Y, 100, 100, X)
 }
 }

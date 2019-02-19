@@ -2,37 +2,34 @@
 % Please edit documentation in R/lori.R
 \name{altmin}
 \alias{altmin}
-\title{Estimation algorithm for the LoRI parameters.}
+\title{Estimation algorithm for the LORI parameters.}
 \usage{
-altmin(Y, lambda1, lambda2, cov = NULL, rank.max = 2, thresh = 1e-06,
-  maxit = 1000, mu_init = 0, alpha_init = NULL, theta_init = NULL,
-  trace.it = T)
+altmin(Y, lambda1, lambda2, cov = NULL, rank.max = 5, thresh = 1e-06,
+  maxit = 1000, trace.it = T, reff = T, ceff = T)
 }
 \arguments{
-\item{Y}{A matrix of counts (nxp).}
+\item{Y}{[matrix, data.frame] count table (nxp).}
 
-\item{lambda1}{A number, the regularization parameter for the interaction matrix.}
+\item{lambda1}{[positive number] the regularization parameter for the interaction matrix.}
 
-\item{lambda2}{A number, the regularization parameter for the covariate effects.}
+\item{lambda2}{[positive number] the regularization parameter for the covariate effects.}
 
-\item{cov}{A matrix of row and column covariates (np*K1) in order row1xcol1,row2xcol2,..,rownxcol1,row1xcol2,row2xcol2,...,...,rownxcolp}
+\item{cov}{[matrix, data.frame] design matrix (np*q) in order row1xcol1,row2xcol2,..,rownxcol1,row1xcol2,row2xcol2,...,...,rownxcolp}
 
-\item{rank.max}{An integer, maximum rank of interaction matrix (smaller than min(n-1,p-1))}
+\item{rank.max}{[integer] maximum rank of interaction matrix (smaller than min(n-1,p-1))}
 
-\item{thresh}{A number, convergence tolerance of algorithm, by default \code{1e-6}.}
+\item{thresh}{[positive number] convergence tolerance of algorithm, by default \code{1e-6}.}
 
-\item{maxit}{An integer, maximum allowed number of iterations.}
+\item{maxit}{[integer] maximum allowed number of iterations.}
 
-\item{mu_init}{A number, initial intercept value}
+\item{trace.it}{[boolean] whether convergence information should be printed}
 
-\item{alpha_init}{A vector of length K1, initial value of covariate effects}
+\item{reff}{[boolean] whether row effects should be fitted, default value is TRUE}
 
-\item{theta_init}{An nxp matrix, initial value of the interactions.}
-
-\item{trace.it}{A boolean, whether convergence information should be printed}
+\item{ceff}{[boolean] whether column effects should be fitted, default value is TRUE}
 }
 \description{
-Estimation algorithm for the LoRI parameters.
+Estimation algorithm for the LORI parameters.
 }
 \examples{
 \dontrun{
