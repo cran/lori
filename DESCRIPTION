@@ -1,7 +1,7 @@
 Package: lori
 Type: Package
 Title: Low-Rank Interactions in Count Data with Covariates
-Version: 2.0.0
+Version: 2.1.1
 Authors@R: person("Genevieve", "Robin", email = "genevieve.robin@polytechnique.edu",
   role = c("aut", "cre"))
 Maintainer: Genevieve Robin <genevieve.robin@polytechnique.edu>
@@ -9,14 +9,12 @@ Description: Analysis, imputation, and multiple imputation of count data using c
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
-Imports: psych, svd, NLRoot, FactoMineR, glmnet, pdist, lars, ade4,
-        lattice, gridExtra, grid, grDevices, stats, graphics,
-        data.table, doParallel, parallel, corpcor, foreach
+Imports: svd, glmnet, stats, data.table, doParallel, parallel, corpcor,
+        foreach, FactoMineR
 Suggests: knitr, rmarkdown, testthat
-VignetteBuilder: knitr
 RoxygenNote: 6.1.0
 NeedsCompilation: no
-Packaged: 2019-02-19 14:05:15 UTC; genevieverobin
+Packaged: 2019-02-26 15:21:02 UTC; genevieverobin
 Author: Genevieve Robin [aut, cre]
 Repository: CRAN
-Date/Publication: 2019-02-19 14:20:02 UTC
+Date/Publication: 2019-02-26 15:40:03 UTC

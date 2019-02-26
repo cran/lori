@@ -21,9 +21,8 @@ p <- d[2]
 cov <- scale(covmat(aravo$env[, c(1,2,4,6)], aravo$traits, n, p))
 
 ## ----apply-lori----------------------------------------------------------
-lambda2 <- cv.glmnet(cov, unlist(c(aravo$spe)), family = "poisson")$lambda.min
-lambda1 <- qut(aravo$spe, cov, lambda2)
-res <- lori(aravo$spe, cov, lambda1=lambda1, lambda2=lambda2, trace.it = T)
-res$alpha
-res$beta
+lambda1 <- qut(aravo$spe, cov)
+res <- lori(aravo$spe, cov, lambda1=lambda1, lambda2=0, trace.it = T)
+plot_cov(res)
+plot_counts(res)
 

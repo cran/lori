@@ -5,7 +5,7 @@
 \title{LORI method.}
 \usage{
 lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, reff = T,
-  ceff = T, rank.max = 5, thresh = 1e-05, maxit = 1000,
+  ceff = T, rank.max = 10, thresh = 1e-05, maxit = 1000,
   trace.it = F)
 }
 \arguments{

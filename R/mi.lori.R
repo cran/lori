@@ -20,6 +20,8 @@
 #' \item{mi.epsilon}{a (Mxq) matrix containing in rows the estimated effects of covariates (one row corresponds to one single imputation)}
 #' \item{mi.theta}{a list of length M containing the estimated interaction matrices}
 #' \item{mi.mu}{a list of length M containing the estimated Poisson means}
+#' \item{mi.y}{list of bootstrapped count tables used fot multiple imputation}
+#' \item{Y}{original incomplete count table}
 
 #' @export
 #'
@@ -35,7 +37,7 @@ mi.lori <-   function(Y,
                       prob=0.1,
                       reff = T,
                       ceff = T,
-                      rank.max = 5,
+                      rank.max = 10,
                       thresh = 1e-5,
                       maxit = 1e3,
                       trace.it = F){
@@ -47,7 +49,7 @@ mi.lori <-   function(Y,
                 thresh, maxit, trace.it))
   })
   mi.imputed <- lapply(reslist, function(res) res$imputed)
-  mi.mu <- lapply(reslist, function(res) res$mu)
+  mi.means <- lapply(reslist, function(res) res$means)
   mi.alpha <- t(sapply(reslist, function(res) res$alpha))
   colnames(mi.alpha) <- rownames(Y)
   mi.beta <- t(sapply(reslist, function(res) res$beta))
@@ -55,23 +57,12 @@ mi.lori <-   function(Y,
   mi.epsilon <- t(sapply(reslist, function(res) res$epsilon))
   colnames(mi.epsilon) <- colnames(cov)
   mi.theta <- lapply(reslist, function(res) res$theta)
-  return(list(mi.imputed=mi.imputed, mi.mu=mi.mu,
+  return(list(mi.imputed=mi.imputed, mi.means=mi.means,
               mi.alpha=mi.alpha, mi.beta=mi.beta,
-              mi.epsilon=mi.epsilon, mi.theta=mi.theta))
+              mi.epsilon=mi.epsilon, mi.theta=mi.theta,
+              mi.y = ylist, Y=Y))
 }
 
-#' Bootstrap function
-#'
-#' @param Y count data matrix
-#' @param prob proportion of entries to remove in each bootstrap sample
-#'
-#' @return
-#' A new data set with additional missing values and Poisson noise
-#' @export
-#' @import stats
-#' @examples
-#' Y <- matrix(rpois(25, 1:25), 5)
-#' yboot <- boot.lori(Y)
 boot.lori <- function(Y, prob=0.1){
   Y <- as.matrix(Y)
   d <- dim(Y)
@@ -85,6 +76,6 @@ boot.lori <- function(Y, prob=0.1){
   yp <- Y[idx_sites,idx_years]
   yp[sample(which(!is.na(yp)), n_na)] <- NA
   Y[idx_sites,idx_years] <- yp
-  Y[which(!is.na(Y))] <- rpois(sum(!is.na(Y)), c(Y[which(!is.na(Y))]))
+  Y[which(!is.na(Y))] <- stats::rpois(sum(!is.na(Y)), c(Y[which(!is.na(Y))]))
   return(Y)
 }
