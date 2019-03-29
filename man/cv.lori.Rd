@@ -5,9 +5,9 @@
 \title{selection of the regularization
 parameters (lambda1 and lambda2) of the lori function by cross-validation}
 \usage{
-cv.lori(Y, cov = NULL, intercept = F, reff = T, ceff = T,
-  rank.max = 10, N = 5, len = 20, prob = 0.2, algo = c("alt",
-  "mcgd"), thresh = 1e-06, maxit = 100, trace.it = F, parallel = F)
+cv.lori(Y, cov = NULL, intercept = T, reff = T, ceff = T,
+  rank.max = 5, N = 5, len = 20, prob = 0.2, algo = c("alt",
+  "mcgd"), thresh = 1e-05, maxit = 100, trace.it = F)
 }
 \arguments{
 \item{Y}{[matrix, data.frame] abundance table (nxp)}
@@ -35,8 +35,6 @@ cv.lori(Y, cov = NULL, intercept = F, reff = T, ceff = T,
 \item{maxit}{[integer] maximum number of iterations, default is 100}
 
 \item{trace.it}{[boolean] whether information about convergence should be printed}
-
-\item{parallel}{[boolean] whether the N-fold cross-validation should be parallelized, default value is TRUE}
 }
 \value{
 A list with the following elements

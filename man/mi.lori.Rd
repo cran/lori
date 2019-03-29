@@ -5,8 +5,9 @@
 \title{multiple imputation of count data using the lori model}
 \usage{
 mi.lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, M = 25,
-  prob = 0.1, reff = T, ceff = T, rank.max = 10, algo = c("alt",
-  "mcgd"), thresh = 1e-05, maxit = 1000, trace.it = F)
+  intercept = T, reff = T, ceff = T, rank.max = 5,
+  algo = c("alt", "mcgd"), thresh = 1e-05, maxit = 1000,
+  trace.it = F)
 }
 \arguments{
 \item{Y}{[matrix, data.frame] count table (nxp).}
@@ -19,7 +20,7 @@ mi.lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, M = 25,
 
 \item{M}{[integer] the number of multiple imputations to perform}
 
-\item{prob}{[positive number in (0,1)] the proportion of entries to remove in bootstrap}
+\item{intercept}{[boolean] whether an intercept should be fitted, default value is FALSE}
 
 \item{reff}{[boolean] whether row effects should be fitted, default value is TRUE}
 

@@ -5,7 +5,7 @@
 #' @param lambda1 [positive number] the regularization parameter for the interaction matrix.
 #' @param lambda2 [positive number] the regularization parameter for the covariate effects.
 #' @param M [integer] the number of multiple imputations to perform
-#' @param prob [positive number in (0,1)] the proportion of entries to remove in bootstrap
+#' @param intercept [boolean] whether an intercept should be fitted, default value is FALSE
 #' @param reff [boolean] whether row effects should be fitted, default value is TRUE
 #' @param ceff [boolean] whether column effects should be fitted, default value is TRUE
 #' @param rank.max [integer] maximum rank of interaction matrix (smaller than min(n-1,p-1))
@@ -35,14 +35,16 @@ mi.lori <-   function(Y,
                       lambda1 = NULL,
                       lambda2 = NULL,
                       M = 25,
-                      prob = 0.1,
+                      intercept=T,
                       reff = T,
                       ceff = T,
-                      rank.max = 10,
+                      rank.max = 5,
                       algo = c("alt", "mcgd"),
                       thresh = 1e-5,
                       maxit = 1e3,
                       trace.it = F) {
+  Y <- as.matrix(Y)
+  prob <- min(0.3, sum(is.na(Y))/(nrow(Y)*ncol(Y)))
   if (round(sqrt(M)) < sqrt(M))
     M <- round(sqrt(M)) + 1
   else
@@ -50,12 +52,32 @@ mi.lori <-   function(Y,
   ylist <- lapply(1:M, function(k)
     boot.lori(Y))
   reslist <- lapply(1:M, function(k) {
-    cat('\r', round(100 * k / (2 * M)), "%", sep = "")
+    cat('\r', round(100 * k / (3 * M)), "%", sep = "")
     return(lori(
       Y=ylist[[k]],
       cov=cov,
       lambda1=lambda1,
       lambda2=lambda2,
+      intercept=intercept,
+      reff=reff,
+      ceff=ceff,
+      rank.max=rank.max,
+      algo=algo,
+      thresh=thresh,
+      maxit=maxit,
+      trace.it=trace.it
+    )$imputed)
+  })
+  reslist <- lapply(1:M, function(k) {
+    res <- reslist[[k]]
+    cat('\r', round(33+100 * k / (3 * M)), "%", sep = "")
+    res <- na_func(res, prob)
+    return(lori(
+      Y=res,
+      cov=cov,
+      lambda1=lambda1,
+      lambda2=lambda2,
+      intercept=intercept,
       reff=reff,
       ceff=ceff,
       rank.max=rank.max,
@@ -75,13 +97,14 @@ mi.lori <-   function(Y,
       ), nrow = n)))
   mi.imputed <- unlist(mi.imputed, recursive = F)
   reslist <- lapply(1:length(mi.imputed), function(m) {
-    cat('\r', round(50 + 100 * m / (2 * M ^ 2)), "%", sep = "")
+    cat('\r', round(66 + 100 * m / (3 * M ^ 2)), "%", sep = "")
     return(
       lori(
         Y = mi.imputed[[m]],
         cov = cov,
         lambda1 = lambda1,
         lambda2=lambda2,
+        intercept=intercept,
         reff=reff,
         ceff=ceff,
         rank.max=rank.max,
@@ -126,4 +149,18 @@ boot.lori <- function(Y) {
     stats::rmultinom(1, size = sum(Y, na.rm = T), prob = Y[!is.na(Y)] / m)
   Y[!is.na(Y)] <- new_counts
   return(Y)
+}
+
+na_func <- function(x, prob=0.1){
+  x <- as.matrix(x)
+  yp <- x
+  d <- dim(x)
+  n <- d[1]
+  p <- d[2]
+  n_na <- round(prob*sum(!is.na(x)))
+  probs <- prob*sqrt(x/sum(x))
+  probs <- probs/max(probs)
+  yp[stats::rbinom(n*p, 1, prob=(1-probs))] <- NA
+  return(yp)
+
 }

@@ -24,6 +24,7 @@
 #' @param legend a list of arguments that defines the legend if needed (when individuals are drawn according to a variable); see the arguments of the function legend
 #' @param ... further arguments passed to or from other methods, such as cex, cex.main, ...
 #' @method plot lori
+#' @import FactoMineR
 #' @export
 #' @examples
 #' X = matrix(rnorm(rep(0, 15)), 5)

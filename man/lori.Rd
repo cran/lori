@@ -5,8 +5,8 @@
 \title{main function: analysis and imputation of incomplete count data tables
 using side information (row-column attributes).}
 \usage{
-lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, intercept = F,
-  reff = T, ceff = T, rank.max = 10, algo = c("alt", "mcgd"),
+lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, intercept = T,
+  reff = T, ceff = T, rank.max = 5, algo = c("alt", "mcgd"),
   thresh = 1e-05, maxit = 1000, trace.it = F)
 }
 \arguments{
