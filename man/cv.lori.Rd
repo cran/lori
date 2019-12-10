@@ -7,7 +7,7 @@ parameters (lambda1 and lambda2) of the lori function by cross-validation}
 \usage{
 cv.lori(Y, cov = NULL, intercept = T, reff = T, ceff = T,
   rank.max = 5, N = 5, len = 20, prob = 0.2, algo = c("alt",
-  "mcgd"), thresh = 1e-05, maxit = 100, trace.it = F)
+  "mcgd"), thresh = 1e-05, maxit = 10, trace.it = F)
 }
 \arguments{
 \item{Y}{[matrix, data.frame] abundance table (nxp)}

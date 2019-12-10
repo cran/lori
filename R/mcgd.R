@@ -2,9 +2,9 @@ mcgd <- function(Y,
                  lambda1,
                  lambda2,
                  cov = NULL,
-                 rank.max = 10,
-                 thresh = 1e-6,
-                 maxit = 1e3,
+                 rank.max = 2,
+                 thresh = 1e-5,
+                 maxit = 100,
                  trace.it = F,
                  intercept = F,
                  reff = T,
@@ -75,7 +75,7 @@ mcgd <- function(Y,
         -Y * (mu + alpmat + betmat + epsmat + theta) + exp(mu + alpmat + betmat +
                                                              epsmat + theta),
         na.rm = T
-      ) / m + lambda1 * R + sum(lambda2 * c(abs(epsilon), abs(alpha), abs(beta)))
+      ) + lambda1 * R + sum(lambda2 * c(abs(epsilon), abs(alpha), abs(beta)))
     while (flag) {
       step <- 0.5 * step
       mat <-
@@ -94,7 +94,7 @@ mcgd <- function(Y,
           -Y * (mu + alpmat + betmat + epsmat + theta) + exp(mu + alpmat + betmat +
                                                                epsmat + theta),
           na.rm = T
-        ) / m + lambda1 * R + sum(lambda2 * c(abs(epsilon), abs(alpha), abs(beta))) - ref.obj
+        ) + lambda1 * R + sum(lambda2 * c(abs(epsilon), abs(alpha), abs(beta))) - ref.obj
       flag <- diff > thresh * abs(ref.obj)
       step <- 0.5 * step
     }

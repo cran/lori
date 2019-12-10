@@ -6,8 +6,8 @@
 using side information (row-column attributes).}
 \usage{
 lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, intercept = T,
-  reff = T, ceff = T, rank.max = 5, algo = c("alt", "mcgd"),
-  thresh = 1e-05, maxit = 1000, trace.it = F)
+  reff = T, ceff = T, rank.max = 2, algo = c("alt", "mcgd"),
+  thresh = 1e-05, maxit = 100, trace.it = F)
 }
 \arguments{
 \item{Y}{[matrix, data.frame] count table (nxp).}

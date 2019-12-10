@@ -4,9 +4,9 @@ altmin <-
            lambda1,
            lambda2,
            cov = NULL,
-           rank.max = 10,
-           thresh = 1e-6,
-           maxit = 1e3,
+           rank.max = 2,
+           thresh = 1e-5,
+           maxit = 100,
            trace.it = T,
            intercept = F,
            reff = T,
@@ -28,22 +28,21 @@ altmin <-
     } else{
       epsilon <- 0
     }
-    alpmat <- matrix(rep(alpha, p), nrow = n)
-    betmat <- matrix(rep(beta, each = n), nrow = n)
-    epsmat <- matrix(cov %*% epsilon, nrow = n)
     error = 1
     objective <- NULL
     count = 1
     Y2 <- Y
     Y2[is.na(Y)] <- 0
-    X <- mu + alpmat + betmat + epsmat + theta
+    X <- mu + matrix(cov %*% epsilon, nrow = n) + theta
+    X <- sweep(X, 1, alpha, "+")
+    X <- sweep(X, 2, beta, "+")
     Ytalp <- c(Y[!is.na(Y)])
     while (error > thresh && count < maxit) {
       mu.tmp <- mu
       alpha.tmp <- alpha
       beta.tmp <- beta
       epsilon.tmp <- epsilon
-      d.tmp <- svd(theta)$d
+      d.tmp <- svd(theta, nu=rank.max, nv=rank.max)$d
       if(!intercept) mu <- 0 else mu <- log(sum(Y, na.rm=T)/sum(Omega*exp(X-mu.tmp)))
       if(!reff) alpha <- rep(0,n)
       if(!ceff) beta <- rep(0,p)
@@ -52,46 +51,42 @@ altmin <-
       if(!ceff) grad[(n+1):(n+p)] <- 0
       step <- 1
       flag <- TRUE
-      alpmat <- matrix(rep(alpha, p), nrow=n)
-      betamat <- matrix(rep(beta, each=n), nrow=n)
-      epsilonmat <- matrix(cov%*% epsilon, nrow=n)
-      armijo.step <- 1e-3
+      Xtmp <- mu + theta + matrix(cov%*% epsilon, nrow=n)
+      Xtmp <- sweep(Xtmp, 1, alpha, "+")
+      Xtmp <- sweep(Xtmp, 2, beta, "+")
+      armijo.step <- 1
       ref.obj <-
-        sum((-Y * (mu+alpmat + betmat + epsmat + theta) + exp(mu+alpmat + betmat +
-                                                                epsmat + theta)),
-            na.rm = T) / (m) + lambda1 * sum(d.tmp) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta)))
+        sum((-Y * (Xtmp) + exp(Xtmp)),na.rm = T) + lambda1 * sum(d.tmp) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta)))
       while(flag){
         #print(step)
         maineff <- sign(c(alpha.tmp, beta.tmp, epsilon.tmp)-step*grad)*pmax(abs(c(alpha.tmp, beta.tmp, epsilon.tmp)-step*grad)-step*lambda2, 0)
         alpha <- maineff[1:n]
         beta <- maineff[(n+1):(n+p)]
         epsilon <- maineff[(n+p+1):(n+p+q)]
-        alpmat <- matrix(rep(alpha, p), nrow=n)
-        betmat <- matrix(rep(beta, each=n), nrow=n)
-        epsmat <- matrix(cov%*% epsilon, nrow=n)
+        Xtmp <- mu + theta + matrix(cov%*% epsilon, nrow=n)
+        Xtmp <- sweep(Xtmp, 1, alpha, "+")
+        Xtmp <- sweep(Xtmp, 2, beta, "+")
         diff <-
-          sum((-Y * (mu + alpmat + betmat + epsmat + theta) + exp(mu + alpmat + betmat +
-                                                                    epsmat + theta)),
-              na.rm = T) / (m) + lambda1 * sum(d.tmp) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta))) - ref.obj
+          sum((-Y * (Xtmp) + exp(Xtmp)), na.rm = T)  + lambda1 * sum(d.tmp) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta))) - ref.obj
         flag <- diff > thresh * abs(ref.obj)
         step <- 0.5*step
       }
-      X <- mu + alpmat + betmat + epsmat + theta
-      grad_theta <- (-Y2 + exp(mu + alpmat + betmat + epsmat + theta)) /m
+      X <- Xtmp
+      grad_theta <- (-Y2 + exp(X))
       grad_theta <- sweep(grad_theta, 2, colMeans(grad_theta))
       grad_theta <- sweep(grad_theta, 1, rowMeans(grad_theta))
 
       flag <- TRUE
       step <- 1
-      armijo.step <- 1e-2
+      armijo.step <- 1
       ref.obj <-
-        sum((-Y * (mu + alpmat + betmat + epsmat + theta) + exp(mu + alpmat + betmat +
-                                                                  epsmat + theta)),
-            na.rm = T) / (m) + lambda1 * sum(d.tmp) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta)))
+        sum((-Y * (X) + exp(X)), na.rm = T) + lambda1 * sum(d.tmp) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta)))
+      Xtmp <- mu + matrix(cov%*% epsilon, nrow=n)
+      Xtmp <- sweep(Xtmp, 1, alpha, "+")
+      Xtmp <- sweep(Xtmp, 2, beta, "+")
       while (flag) {
         #print(step)
-        svd_theta <-
-          svd(theta - step * grad_theta)
+        svd_theta <- svd(theta - step * grad_theta, nu=rank.max, nv=rank.max)
         d <- svd_theta$d[1:rank.max]
         u <- svd_theta$u[, 1:rank.max]
         v <- svd_theta$v[, 1:rank.max]
@@ -108,15 +103,13 @@ altmin <-
           theta2 <- u %*% diag(d) %*% t(v)
         }
         diff <-
-          sum((-Y* (mu + alpmat + betmat + epsmat + theta2) + exp(mu + alpmat + betmat +
-                                                                    epsmat + theta2)),
-              na.rm = T) / (m) + lambda1 * sum(d) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta)))- ref.obj
+          sum((-Y* (Xtmp + theta2) + exp(Xtmp+ theta2)), na.rm = T) + lambda1 * sum(d) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta)))- ref.obj
         flag <- diff > thresh * abs(ref.obj)
         step <- 0.5 * step
       }
       theta <- theta2
-      X <- mu + alpmat + betmat + epsmat + theta
-      objective = c(objective,-sum((Y * X - Omega * exp(X)), na.rm = T) /m + lambda1 *
+      X <- Xtmp + theta
+      objective = c(objective,-sum((Y * X - exp(X)), na.rm = T)+ lambda1 *
                       sum(d) + sum(lambda2 * c(abs(epsilon),abs(alpha), abs(beta))))
       if(count==1){
         error <- 1

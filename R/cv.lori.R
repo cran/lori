@@ -38,7 +38,7 @@ cv.lori <- function(Y,
                     prob = 0.2,
                     algo = c("alt", "mcgd"),
                     thresh = 1e-5,
-                    maxit = 100,
+                    maxit = 10,
                     trace.it = F) {
   Y <- as.matrix(Y)
   Y2 <- Y
@@ -53,13 +53,13 @@ cv.lori <- function(Y,
   epsilon <- rep(0, ncol(cov))
   alpmat <- matrix(rep(alpha, p), nrow = n)
   betmat <- matrix(rep(beta, each = n), nrow = n)
-  epsmat <- matrix(cov %*% epsilon, nrow = n)
+  epsmat <- matrix(as.matrix(cov) %*% epsilon, nrow = n)
   theta <- matrix(0, n, p)
   X <- alpmat + betmat + epsmat + theta
-  gd_main <- grad(Y, cov, mu, alpha, beta, epsilon, theta)
+  gd_main <- grad(Y, as.matrix(cov), mu, alpha, beta, epsilon, theta)
   lambda2.max <- max(abs(gd_main))
-  lambda2.min <- max(1e-4, 1e-5 * lambda2.max)
-  grad_theta <- (-Y2 + exp(alpmat + betmat + epsmat + theta)) / m
+  lambda2.min <- max(1e-4, 1e-3 * lambda2.max)
+  grad_theta <- (-Y2 + exp(alpmat + betmat + epsmat + theta))
   lambda1.max <- max(svd(grad_theta)$d)
   lambda1.min <- max(1e-3, 1e-3 * lambda1.max)
   grid.lambda1 <-
