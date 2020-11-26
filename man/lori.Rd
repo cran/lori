@@ -5,9 +5,21 @@
 \title{main function: analysis and imputation of incomplete count data tables
 using side information (row-column attributes).}
 \usage{
-lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, intercept = T,
-  reff = T, ceff = T, rank.max = 2, algo = c("alt", "mcgd"),
-  thresh = 1e-05, maxit = 100, trace.it = F)
+lori(
+  Y,
+  cov = NULL,
+  lambda1 = NULL,
+  lambda2 = NULL,
+  intercept = T,
+  reff = T,
+  ceff = T,
+  rank.max = 2,
+  algo = c("alt", "mcgd"),
+  thresh = 1e-05,
+  maxit = 100,
+  trace.it = F,
+  parallel = F
+)
 }
 \arguments{
 \item{Y}{[matrix, data.frame] count table (nxp).}
@@ -33,6 +45,8 @@ lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, intercept = T,
 \item{maxit}{[integer] maximum allowed number of iterations.}
 
 \item{trace.it}{[boolean] whether convergence information should be printed}
+
+\item{parallel}{[boolean] whether computations should be performed in parallel on multiple cores}
 }
 \value{
 A list with the following elements

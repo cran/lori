@@ -13,7 +13,8 @@
 #' @param thresh [positive number] convergence tolerance of algorithm, by default \code{1e-6}.
 #' @param maxit [integer] maximum allowed number of iterations.
 #' @param trace.it [boolean] whether convergence information should be printed
-#' @import stats rARPACK svd
+#' @param parallel [boolean] whether computations should be performed in parallel on multiple cores
+#' @import stats rARPACK svd parallel
 #' @export
 #' @return A list with the following elements
 #' \item{X}{nxp matrix of log of expected counts}
@@ -42,7 +43,8 @@ lori <-
            algo = c("alt","mcgd"),
            thresh = 1e-5,
            maxit = 100,
-           trace.it = F)
+           trace.it = F,
+           parallel=F)
   {
     Y <- as.matrix(Y)
     d <- dim(Y)
@@ -81,7 +83,8 @@ lori <-
         rank.max = rank.max,
         intercept = intercept,
         reff = reff,
-        ceff = ceff
+        ceff = ceff,
+        parallel=F
       )
     }
     X <- res$X

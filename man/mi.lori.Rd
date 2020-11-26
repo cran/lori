@@ -4,10 +4,21 @@
 \alias{mi.lori}
 \title{multiple imputation of count data using the lori model}
 \usage{
-mi.lori(Y, cov = NULL, lambda1 = NULL, lambda2 = NULL, M = 25,
-  intercept = T, reff = T, ceff = T, rank.max = 5,
-  algo = c("alt", "mcgd"), thresh = 1e-05, maxit = 1000,
-  trace.it = F)
+mi.lori(
+  Y,
+  cov = NULL,
+  lambda1 = NULL,
+  lambda2 = NULL,
+  M = 25,
+  intercept = T,
+  reff = T,
+  ceff = T,
+  rank.max = 5,
+  algo = c("alt", "mcgd"),
+  thresh = 1e-05,
+  maxit = 1000,
+  trace.it = F
+)
 }
 \arguments{
 \item{Y}{[matrix, data.frame] count table (nxp).}

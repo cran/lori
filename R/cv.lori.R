@@ -14,6 +14,7 @@
 #' @param thresh [positive number] convergence threshold, default is 1e-5
 #' @param maxit [integer] maximum number of iterations, default is 100
 #' @param trace.it [boolean] whether information about convergence should be printed
+#' @param parallel [boolean] whether computations should be performed in parallel on multiple cores
 #'
 #' @return A list with the following elements
 #' \item{lambda1}{regularization parameter estimated by cross-validation for nuclear norm penalty (interaction matrix)}
@@ -21,7 +22,7 @@
 #' \item{errors}{a table containing the prediction errors for all pairs of parameters}
 
 #' @export
-#' @import data.table
+#' @import data.table parallel
 #'
 #' @examples
 #' X <- matrix(rnorm(20), 10)
@@ -39,7 +40,8 @@ cv.lori <- function(Y,
                     algo = c("alt", "mcgd"),
                     thresh = 1e-5,
                     maxit = 10,
-                    trace.it = F) {
+                    trace.it = F,
+                    parallel=F) {
   Y <- as.matrix(Y)
   Y2 <- Y
   Y2[is.na(Y2)] <- 0
@@ -79,10 +81,11 @@ cv.lori <- function(Y,
     x[idx] <- NA
     return(x)
   }
+  if (parallel) n_cores <- detectCores() else n_cores <- 1
   ylist <-
-    lapply(1:N, function(k)
-      na_func(as.matrix(Y), prob = prob))
-  res.cv <-   lapply(1:N, function(k) {
+    mclapply(1:N, function(k)
+      na_func(as.matrix(Y), prob = prob), mc.cores=n_cores)
+  res.cv <-   mclapply(1:N, function(k) {
     sapply(1:nrow(grid),
            function(i) {
              if (trace.it)
@@ -111,7 +114,7 @@ cv.lori <- function(Y,
                )$imputed
              return(sqrt(sum((res - Y) ^ 2, na.rm = T)))
            })
-  })
+  }, mc.cores = n_cores)
   res.cv <- colMeans(do.call(rbind, res.cv))
   l <- which.min(res.cv)
   lambda1 <- grid[l, 1]
