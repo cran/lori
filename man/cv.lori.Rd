@@ -2,8 +2,13 @@
 % Please edit documentation in R/cv.lori.R
 \name{cv.lori}
 \alias{cv.lori}
-\title{selection of the regularization
-parameters (lambda1 and lambda2) of the lori function by cross-validation}
+\title{The cv.lori method performs automatic selection of the
+regularization parameters (lambda1 and lambda2) used in
+the lori function. These parameters are selected by
+cross-validation. The classical procedure is to apply
+cv.lori to the data to select the regularization parameters,
+and to then impute and analyze the data using the lori
+function (or mi.lori for multiple imputation).}
 \usage{
 cv.lori(
   Y,
@@ -58,8 +63,13 @@ A list with the following elements
 \item{errors}{a table containing the prediction errors for all pairs of parameters}
 }
 \description{
-selection of the regularization
-parameters (lambda1 and lambda2) of the lori function by cross-validation
+The cv.lori method performs automatic selection of the
+regularization parameters (lambda1 and lambda2) used in
+the lori function. These parameters are selected by
+cross-validation. The classical procedure is to apply
+cv.lori to the data to select the regularization parameters,
+and to then impute and analyze the data using the lori
+function (or mi.lori for multiple imputation).
 }
 \examples{
 X <- matrix(rnorm(20), 10)

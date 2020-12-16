@@ -1,5 +1,10 @@
-#' selection of the regularization
-#' parameters (lambda1 and lambda2) of the lori function by cross-validation
+#' The cv.lori method performs automatic selection of the
+#' regularization parameters (lambda1 and lambda2) used in
+#' the lori function. These parameters are selected by
+#' cross-validation. The classical procedure is to apply
+#' cv.lori to the data to select the regularization parameters,
+#' and to then impute and analyze the data using the lori
+#' function (or mi.lori for multiple imputation).
 #'
 #' @param Y [matrix, data.frame] abundance table (nxp)
 #' @param cov [matrix, data.frame] design matris (npxq)

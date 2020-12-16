@@ -18,8 +18,8 @@ altmin <-
     p <- ncol(Y)
     q <- ncol(cov)
     rank.max <- min(n - 1, p - 1, rank.max)
-    Omega <- 1 - 1 * is.na(Y)
-    m <- sum(!is.na(Y))
+    Omega <- 1 * (!is.na(Y))
+    m <- sum(Omega)
     mu <- 0
     theta <- matrix(0, nrow = n, ncol = p)
     alpha <- rep(0, n)

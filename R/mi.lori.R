@@ -1,4 +1,8 @@
-#' multiple imputation of count data using the lori model
+#' The mi.lori performs M multiple imputations using the
+#' lori method. Multiple imputation allows to produce estimates of missing
+#' values, as well as intervals of variability. The classical
+#' procedure is to perform M multiple imputations using the mi.lori
+#' method, and to aggregate them using the pool.lori method.
 #'
 #' @param Y [matrix, data.frame] count table (nxp).
 #' @param cov [matrix, data.frame] design matrix (np*q) in order row1xcol1,row2xcol2,..,rownxcol1,row1xcol2,row2xcol2,...,...,rownxcolp

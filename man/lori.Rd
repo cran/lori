@@ -2,8 +2,15 @@
 % Please edit documentation in R/lori.R
 \name{lori}
 \alias{lori}
-\title{main function: analysis and imputation of incomplete count data tables
-using side information (row-column attributes).}
+\title{The lori method implements a method to analyze and impute
+incomplete count tables. An important feature of the method
+is that it can take into account main effects of rows and
+columns, as well as effects of continuous or categorical
+covariates, and interaction. The estimation procedure is
+based on minimizing a Poisson loss penalized by a Lasso
+type penalty (sparse vector of covariate effects) and a
+nuclear norm penalty inducing a low-rank interaction matrix
+(a few latent factors summarize the interactions).}
 \usage{
 lori(
   Y,
@@ -60,8 +67,15 @@ A list with the following elements
 \item{cov}{npxK matrix of covariates}
 }
 \description{
-main function: analysis and imputation of incomplete count data tables
-using side information (row-column attributes).
+The lori method implements a method to analyze and impute
+incomplete count tables. An important feature of the method
+is that it can take into account main effects of rows and
+columns, as well as effects of continuous or categorical
+covariates, and interaction. The estimation procedure is
+based on minimizing a Poisson loss penalized by a Lasso
+type penalty (sparse vector of covariate effects) and a
+nuclear norm penalty inducing a low-rank interaction matrix
+(a few latent factors summarize the interactions).
 }
 \examples{
 \dontshow{

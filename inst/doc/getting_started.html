@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>Getting started</title>
+
+<script>// Hide empty <a> tag within highlighted CodeBlock for screen reader accessibility (see https://github.com/jgm/pandoc/issues/6352#issuecomment-626106786) -->
+// v0.0.1
+// Written by JooYoung Seo (jooyoung@psu.edu) and Atsushi Yasumoto on June 1st, 2020.
+
+document.addEventListener('DOMContentLoaded', function() {
+  const codeList = document.getElementsByClassName("sourceCode");
+  for (var i = 0; i < codeList.length; i++) {
+    var linkList = codeList[i].getElementsByTagName('a');
+    for (var j = 0; j < linkList.length; j++) {
+      if (linkList[j].innerHTML === "") {
+        linkList[j].setAttribute('aria-hidden', 'true');
+      }
+    }
+  }
+});
+</script>
+<style type="text/css">
+a.anchor-section {margin-left: 10px; visibility: hidden; color: inherit;}
+a.anchor-section::before {content: '#';}
+.hasAnchor:hover a.anchor-section {visibility: visible;}
+</style>
+<script>// Anchor sections v1.0 written by Atsushi Yasumoto on Oct 3rd, 2020.
+document.addEventListener('DOMContentLoaded', function() {
+  // Do nothing if AnchorJS is used
+  if (typeof window.anchors === 'object' && anchors.hasOwnProperty('hasAnchorJSLink')) {
+    return;
+  }
+
+  const h = document.querySelectorAll('h1, h2, h3, h4, h5, h6');
+
+  // Do nothing if sections are already anchored
+  if (Array.from(h).some(x => x.classList.contains('hasAnchor'))) {
+    return null;
+  }
+
+  // Use section id when pandoc runs with --section-divs
+  const section_id = function(x) {
+    return ((x.classList.contains('section') || (x.tagName === 'SECTION'))
+            ? x.id : '');
+  };
+
+  // Add anchors
+  h.forEach(function(x) {
+    const id = x.id || section_id(x.parentElement);
+    if (id === '') {
+      return null;
+    }
+    let anchor = document.createElement('a');
+    anchor.href = '#' + id;
+    anchor.classList = ['anchor-section'];
+    x.classList.add('hasAnchor');
+    x.appendChild(anchor);
+  });
+});
+</script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Getting started</h1>
+
+
+
+<p>The R package lori (<a href="https://CRAN.R-project.org/package=lori" class="uri">https://CRAN.R-project.org/package=lori</a>) contains methods for the analysis, single imputation, and multiple imputation of incomplete count data with side information. In this tutorial, the models and procedures are recalled as concisely as possible, and we display the main functionalities of the lori package. That is, a single imputation procedure–which also returns estimates of main effects and interactions–a cross-validation function to select the regularization parameters, and a function to perform multiple imputation. We also provide reusable code using a simulated toy example.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(lori)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">set.seed</span>(<span class="dv">123</span>)</span></code></pre></div>
+<div id="general-model" class="section level1">
+<h1>General model</h1>
+<p>Consider an abundance table <span class="math inline">\(Y\in \mathbb{N}^{n\times p}\)</span>, with missing values. Assume that three other tables are available: <span class="math inline">\(R\in \mathbb{R}^{n\times K_1}\)</span>, containing covariates about the rows of <span class="math inline">\(Y\)</span> (geographical information for instance), <span class="math inline">\(C\in \mathbb{R}^{p\times K_2}\)</span>, containing covariates about the columns of <span class="math inline">\(Y\)</span> (yearly meteorological indices), and <span class="math inline">\(E\in \mathbb{R}^{np\times K_3}\)</span> containing co- variates about the row-column pairs (yearly meteorological information at the sites’ scale, yearly economical indices of the sites’ country, etc.). We denote by <span class="math inline">\(R_i\)</span> (resp. <span class="math inline">\(C_i\)</span>, <span class="math inline">\(E_i\)</span>) the <span class="math inline">\(i\)</span>-th row of <span class="math inline">\(R\)</span> (resp of <span class="math inline">\(C\)</span>, <span class="math inline">\(E\)</span>).</p>
+<p>The model implemented in the lori package is the following log-linear model: <span class="math display">\[Y_{i,j}\sim\mathcal{P}(\exp(X_{i,j})), \quad X_{i,j} = \alpha_i + \beta_j + \sum_{k=1}^{K_1+K_2}U^{i,j}_k\epsilon_k + \Theta_{i,j},
+\]</span> where <span class="math inline">\(U \in \mathbb{R}^{np\times(K1+K2+K3)}\)</span> denotes the covariate matrix concatenating all the available covariate information, and whose <span class="math inline">\((j-1)n+i\)</span>-th row, for <span class="math inline">\(1\leq i\leq n\)</span> <span class="math inline">\(1\leq j\leq p\)</span> are defined by: <span class="math inline">\(U_{(j-1)n+i} = (R_i, C_j, E_{j-1}n+i)\)</span>. Note that the function covmat is implemented to build <span class="math inline">\(U\)</span> from any combination of <span class="math inline">\(R\)</span>, <span class="math inline">\(C\)</span> and <span class="math inline">\(E\)</span>.</p>
+</div>
+<div id="simulated-data" class="section level1">
+<h1>Simulated data</h1>
+<p>We start by generating simulated data as follows</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">## covariates</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>n &lt;-<span class="st"> </span><span class="dv">10</span> <span class="co"># number of rows</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>p &lt;-<span class="st"> </span><span class="dv">6</span> <span class="co"># number of columns</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>K1 &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># number of row covariates</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>K2 &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co"># number of column covariates</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>K3 &lt;-<span class="st"> </span><span class="dv">3</span> <span class="co"># number of (rowxcolumn) covariates</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>R &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(n<span class="op">*</span>K1), <span class="dt">nrow=</span>n) <span class="co"># matrix of row covariates</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a>C &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(p<span class="op">*</span>K2), <span class="dt">nrow=</span>p) <span class="co"># matrix of column covariates</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a>E &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(n<span class="op">*</span>p<span class="op">*</span>K3), <span class="dt">nrow=</span>n<span class="op">*</span>p) <span class="co"># matrix of  (rowxcolumn) covariates</span></span>
+<span id="cb2-10"><a href="#cb2-10"></a>U &lt;-<span class="st"> </span><span class="kw">covmat</span>(n, p, R, C, E)</span>
+<span id="cb2-11"><a href="#cb2-11"></a>U &lt;-<span class="st"> </span><span class="kw">scale</span>(U)</span></code></pre></div>
+<p>Note that the function also supports creating U from any singleton or pair of the matrices <span class="math inline">\((R,C,E)\)</span>, provided that the arguments are in the correct order. In other words, all the commands below may also be used:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>U &lt;-<span class="st"> </span><span class="kw">covmat</span>(n, p, R)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>U &lt;-<span class="st"> </span><span class="kw">covmat</span>(n, p, C)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>U &lt;-<span class="st"> </span><span class="kw">covmat</span>(n, p, R, C)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>U &lt;-<span class="st"> </span><span class="kw">covmat</span>(n, p, <span class="dt">R=</span>R, <span class="dt">E=</span>E)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>U &lt;-<span class="st"> </span><span class="kw">covmat</span>(n, p, <span class="dt">C=</span>C, <span class="dt">E=</span>E)</span></code></pre></div>
+<p>Then we simulate the parameters of the models.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">## parameters</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>alpha0 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, n)</span>
+<span id="cb4-3"><a href="#cb4-3"></a>alpha0[<span class="dv">1</span><span class="op">:</span><span class="dv">6</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>beta0 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, p)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>beta0[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>] &lt;-<span class="st"> </span><span class="dv">1</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a>epsilon0 &lt;-<span class="st"> </span><span class="kw">rep</span>(<span class="dv">0</span>, K1<span class="op">+</span>K2<span class="op">+</span>K3)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>epsilon0[<span class="dv">5</span><span class="op">:</span><span class="dv">6</span>] &lt;-<span class="st"> </span><span class="fl">0.2</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>r &lt;-<span class="st"> </span><span class="dv">2</span> <span class="co">#rank of interaction matrix theta0</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a>theta0 &lt;-<span class="st"> </span><span class="fl">0.1</span><span class="op">*</span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(n<span class="op">*</span>r), <span class="dt">nrow=</span>n)<span class="op">%*%</span><span class="kw">diag</span>(r<span class="op">:</span><span class="dv">1</span>)<span class="op">%*%</span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(p<span class="op">*</span>r), <span class="dt">nrow=</span>r)</span>
+<span id="cb4-10"><a href="#cb4-10"></a>theta0 &lt;-<span class="st"> </span><span class="kw">sweep</span>(theta0, <span class="dv">2</span>, <span class="kw">colMeans</span>(theta0))</span>
+<span id="cb4-11"><a href="#cb4-11"></a>theta0 &lt;-<span class="st"> </span><span class="kw">sweep</span>(theta0, <span class="dv">1</span>, <span class="kw">rowMeans</span>(theta0))</span></code></pre></div>
+<p>Finally we build the matrix of log-intensities, sample corresponding Poisson data, and add MCAR missing values.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co">## construct x0</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>x0 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(alpha0, p), <span class="dt">nrow=</span>n) <span class="co">#row effects</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>x0 &lt;-<span class="st"> </span>x0 <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rep</span>(beta0, <span class="dt">each=</span>n), <span class="dt">nrow=</span>n) <span class="co">#add column effects</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>x0 &lt;-<span class="st"> </span>x0 <span class="op">+</span><span class="st"> </span><span class="kw">matrix</span>(U<span class="op">%*%</span><span class="st"> </span>epsilon0, <span class="dt">nrow=</span>n) <span class="co">#add cov effects</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>x0 &lt;-<span class="st"> </span>x0 <span class="op">+</span><span class="st"> </span>theta0 <span class="co">#add interactions</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="co">## sample count data y</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>y0 &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rpois</span>(n<span class="op">*</span>p, <span class="dt">lambda =</span> <span class="kw">c</span>(<span class="kw">exp</span>(x0))), <span class="dt">nrow =</span> n)</span>
+<span id="cb5-9"><a href="#cb5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10"></a><span class="co">## add missing values</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>p_miss &lt;-<span class="st"> </span><span class="fl">0.2</span></span>
+<span id="cb5-12"><a href="#cb5-12"></a>y &lt;-<span class="st"> </span>y0</span>
+<span id="cb5-13"><a href="#cb5-13"></a>y[<span class="kw">sample</span>(<span class="dv">1</span><span class="op">:</span>(n<span class="op">*</span>p), <span class="kw">round</span>(p_miss<span class="op">*</span>n<span class="op">*</span>p))] &lt;-<span class="st"> </span><span class="ot">NA</span></span></code></pre></div>
+<p># Estimation and imputation</p>
+<p>The purpose of the lori package is dual: to estimate the parameters <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, <span class="math inline">\(\epsilon\)</span>, <span class="math inline">\(\Theta\)</span>, and to impute the count table <span class="math inline">\(Y\)</span>. The corresponding input are the incomplete count data <span class="math inline">\(Y\)</span> and (optionally) the covariate matrix <span class="math inline">\(U\)</span>. The estimation procedure is: <span class="math display">\[(\hat\alpha, \hat\beta, \hat\epsilon, \hat \Theta)\in \operatorname{argmin} \mathcal{L}(Y; \alpha, \beta, \epsilon, \Theta) + \lambda_1\left\|\Theta \right\|_* + \lambda_2\left(\left\|\alpha \right\|_1+\left\|\beta \right\|_1+\left\|\epsilon \right\|_1\right),
+\]</span> where <span class="math inline">\(\mathcal{L}(Y; \alpha, \beta, \epsilon, \Theta)\)</span> is the Poisson negative log-likelihood. With <span class="math inline">\(\Omega\)</span> the mask encoding missing values (<span class="math inline">\(\Omega_{ij} =1\)</span> if entry <span class="math inline">\((i,j)\)</span> is observed and <span class="math inline">\(0\)</span> otherwise): <span class="math display">\[
+\sum_{(i,j)}\Omega_{i,j}[-Y_{i,j}(\alpha_i+\beta_j + \sum_{k=1}^{K}\epsilon_{k}U(i,j)_k + \Theta_{i,j})
+ + \exp(\alpha_i+\beta_j + \sum_{k=1}^{K}\epsilon_{k}U(i,j)_k + \Theta_{i,j})],
+\]</span> The intuition is that the negative log-likelihood is minimized (the parameters should fit the data as much as possible) with additional regularization terms which constrain the parameters and perform model selection automatically. The first penalty term, <span class="math inline">\(\norm{\Theta}[*]\)</span> corresponds to the nuclear norm of <span class="math inline">\(\Theta\)</span> and induces low-rank solutions: this is interpreted as assuming that a few latent factors summarize the interactions. The second term, <span class="math inline">\(\left\|\alpha \right\|_1+\left\|\beta \right\|_1+\left\|\epsilon \right\|_1\)</span>, corresponds to the sum of the <span class="math inline">\(\ell_1\)</span> norms of the vectors <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\epsilon\)</span>: <span class="math display">\[\left\|\alpha \right\|_1+\left\|\beta \right\|_1+\left\|\epsilon \right\|_1 = \sum_{i=1}^{m_1}|\alpha_i| + \sum_{j=1}^{m_2}|\beta_j| + \sum_{k=1}^{K}|\epsilon_k|.\]</span> This penalty induces sparse solutions (vectors <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\epsilon\)</span> containing many zeros), meaning that not all rows, columns and covariates have an effect on the counts. The trade-off between the data-fitting term and the penalties is controlled by the regularization parameters <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>. As <span class="math inline">\(\lambda_1\)</span> increases, the rank of the solution <span class="math inline">\(\hat\Theta\)</span> decreases (the number of latent factors decreases). As <span class="math inline">\(\lambda_2\)</span> increases, the number of nonzero values in <span class="math inline">\(\hat\alpha\)</span>, <span class="math inline">\(\hat\beta\)</span> and <span class="math inline">\(\hat\epsilon\)</span> decreases (the number of active rows, columns and covariates decreases).</p>
+<p>In R, the estimation is done as follows, for some predefined regularization parameters <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">## lori estimation</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>lambda1 &lt;-<span class="st"> </span><span class="fl">0.1</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>lambda2 &lt;-<span class="st"> </span><span class="fl">0.1</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>m &lt;-<span class="st"> </span><span class="kw">sum</span>(<span class="op">!</span><span class="kw">is.na</span>(y))</span>
+<span id="cb6-5"><a href="#cb6-5"></a>t &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()</span>
+<span id="cb6-6"><a href="#cb6-6"></a>res.lori &lt;-<span class="st"> </span><span class="kw">lori</span>(y, U, <span class="fl">0.1</span>, <span class="fl">0.1</span>)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>t &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()<span class="op">-</span>t</span></code></pre></div>
+<p>However, the quality of the estimation is highly dependent on the choice of <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>, and thus we provide a cross-validation function to select them automatically:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>res.cv &lt;-<span class="st"> </span><span class="kw">cv.lori</span>(y, U, <span class="dt">trace.it =</span> F, <span class="dt">len=</span><span class="dv">5</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>res.lori &lt;-<span class="st"> </span><span class="kw">lori</span>(y, U, res.cv<span class="op">$</span>lambda1, res.cv<span class="op">$</span>lambda2)</span></code></pre></div>
+<p>The estimated parameters are accessed as follows</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>res.lori<span class="op">$</span>alpha</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#&gt;  [1]  0.13017010  0.42375452  0.00000000  0.32546414  0.38532507 -0.01740698</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">#&gt;  [7] -0.49502015 -0.08910152 -0.24525029 -0.40457170</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>res.lori<span class="op">$</span>beta</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="co">#&gt; [1]  0.1015438  0.1393790  0.3400212  0.4506407 -0.9235591 -0.2277350</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a>res.lori<span class="op">$</span>espilon</span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co">#&gt; NULL</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>res.lori<span class="op">$</span>theta</span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">#&gt;              [,1]         [,2]         [,3]         [,4]         [,5]</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">#&gt;  [1,]  0.56858957 -0.148792558 -0.029314118  0.074562971 -0.030270667</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">#&gt;  [2,]  0.78081972 -0.044675990  0.439917938 -0.328623857 -0.101531444</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a><span class="co">#&gt;  [3,] -0.75828423  0.255054213  0.209386276 -0.252298239  0.019104295</span></span>
+<span id="cb8-13"><a href="#cb8-13"></a><span class="co">#&gt;  [4,] -1.01427258  0.005845634 -0.728405490  0.567768208  0.151488118</span></span>
+<span id="cb8-14"><a href="#cb8-14"></a><span class="co">#&gt;  [5,]  0.25273257 -0.111536099 -0.149571762  0.155706536  0.003595749</span></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">#&gt;  [6,] -0.78660964  0.387798332  0.587791968 -0.594369899 -0.026459027</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#&gt;  [7,]  0.09343521 -0.178513505 -0.468173273  0.428174794  0.052887602</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co">#&gt;  [8,] -0.11092376  0.055522130  0.085404073 -0.086074034 -0.004045380</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="co">#&gt;  [9,]  0.46676145 -0.112400707  0.005243828  0.034901749 -0.028509395</span></span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="co">#&gt; [10,]  0.50775169 -0.108301451  0.047720560  0.000251772 -0.036259850</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a><span class="co">#&gt;              [,6]</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="co">#&gt;  [1,] -0.43477520</span></span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="co">#&gt;  [2,] -0.74590636</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a><span class="co">#&gt;  [3,]  0.52703769</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a><span class="co">#&gt;  [4,]  1.01757611</span></span>
+<span id="cb8-25"><a href="#cb8-25"></a><span class="co">#&gt;  [5,] -0.15092699</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a><span class="co">#&gt;  [6,]  0.43184826</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a><span class="co">#&gt;  [7,]  0.07218918</span></span>
+<span id="cb8-28"><a href="#cb8-28"></a><span class="co">#&gt;  [8,]  0.06011697</span></span>
+<span id="cb8-29"><a href="#cb8-29"></a><span class="co">#&gt;  [9,] -0.36599693</span></span>
+<span id="cb8-30"><a href="#cb8-30"></a><span class="co">#&gt; [10,] -0.41116272</span></span></code></pre></div>
+<p>The function  also returns imputed values for the missing entries in <span class="math inline">\(\Y\)</span>, based on these point estimates. For each missing entry, the predicted value is given by <span class="math display">\[\hat{Y}_{i,j} = \exp\left(\hat\alpha_i + \hat\beta_j + \sum_{k=1}^{K_1+K_2}U_{(j-1)n+i,k}\hat\epsilon_k + \hat\Theta_{i,j}\right).
+\]</span> The imputed data set <span class="math inline">\(\hatY\)</span>, such that <span class="math inline">\(\hat{Y}_{i,j} = Y_{i,j}\)</span> if <span class="math inline">\(Y_{i,j}\)</span> is observed, and <span class="math inline">\(\hat{Y}_{i,j}\)</span> given by the equation above otherwise, is accessed as follows:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>res.lori<span class="op">$</span>imputed</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="co">#&gt;       [,1] [,2] [,3] [,4] [,5] [,6]</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="co">#&gt;  [1,]    9    3    2    5    2    1</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a><span class="co">#&gt;  [2,]   11   10   14    2    1    1</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="co">#&gt;  [3,]    4    5    9    8    0    2</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a><span class="co">#&gt;  [4,]    1    4    4    9    4    9</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="co">#&gt;  [5,]   14    4    4   12    1    1</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a><span class="co">#&gt;  [6,]    4    5    9    4    2    5</span></span>
+<span id="cb9-9"><a href="#cb9-9"></a><span class="co">#&gt;  [7,]    1    3    0    7    2    2</span></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co">#&gt;  [8,]    0    7    2    3    0    0</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a><span class="co">#&gt;  [9,]    3    2    3    6    2    1</span></span>
+<span id="cb9-12"><a href="#cb9-12"></a><span class="co">#&gt; [10,]    4    2    2    2    0    1</span></span></code></pre></div>
+</div>
+<div id="multiple-imputation" class="section level1">
+<h1>Multiple imputation</h1>
+<p>The function mi.lori performs multiple imputation, based on the single imputation procedure described above. To produce <span class="math inline">\(M\)</span> imputed data sets, a two-step bootstrap procedure is applied. Then, the multiple imputations may be pooled using the function pool.lori. Note that, by default, the parameter <span class="math inline">\(M\)</span> is set to 100. The entire procedure goes as follows in R:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>res.mi &lt;-<span class="st"> </span><span class="kw">mi.lori</span>(y, U, res.cv<span class="op">$</span>lambda1, res.cv<span class="op">$</span>lambda2)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="co">#&gt; </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="dv">7</span>%</span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="dv">13</span>%</span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="dv">20</span>%</span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="dv">27</span>%</span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="dv">33</span>%</span>
+<span id="cb10-8"><a href="#cb10-8"></a><span class="dv">40</span>%</span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="dv">46</span>%</span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="dv">53</span>%</span>
+<span id="cb10-11"><a href="#cb10-11"></a><span class="dv">60</span>%</span>
+<span id="cb10-12"><a href="#cb10-12"></a><span class="dv">66</span>%</span>
+<span id="cb10-13"><a href="#cb10-13"></a><span class="dv">67</span>%</span>
+<span id="cb10-14"><a href="#cb10-14"></a><span class="dv">69</span>%</span>
+<span id="cb10-15"><a href="#cb10-15"></a><span class="dv">70</span>%</span>
+<span id="cb10-16"><a href="#cb10-16"></a><span class="dv">71</span>%</span>
+<span id="cb10-17"><a href="#cb10-17"></a><span class="dv">73</span>%</span>
+<span id="cb10-18"><a href="#cb10-18"></a><span class="dv">74</span>%</span>
+<span id="cb10-19"><a href="#cb10-19"></a><span class="dv">75</span>%</span>
+<span id="cb10-20"><a href="#cb10-20"></a><span class="dv">77</span>%</span>
+<span id="cb10-21"><a href="#cb10-21"></a><span class="dv">78</span>%</span>
+<span id="cb10-22"><a href="#cb10-22"></a><span class="dv">79</span>%</span>
+<span id="cb10-23"><a href="#cb10-23"></a><span class="dv">81</span>%</span>
+<span id="cb10-24"><a href="#cb10-24"></a><span class="dv">82</span>%</span>
+<span id="cb10-25"><a href="#cb10-25"></a><span class="dv">83</span>%</span>
+<span id="cb10-26"><a href="#cb10-26"></a><span class="dv">85</span>%</span>
+<span id="cb10-27"><a href="#cb10-27"></a><span class="dv">86</span>%</span>
+<span id="cb10-28"><a href="#cb10-28"></a><span class="dv">87</span>%</span>
+<span id="cb10-29"><a href="#cb10-29"></a><span class="dv">89</span>%</span>
+<span id="cb10-30"><a href="#cb10-30"></a><span class="dv">90</span>%</span>
+<span id="cb10-31"><a href="#cb10-31"></a><span class="dv">91</span>%</span>
+<span id="cb10-32"><a href="#cb10-32"></a><span class="dv">93</span>%</span>
+<span id="cb10-33"><a href="#cb10-33"></a><span class="dv">94</span>%</span>
+<span id="cb10-34"><a href="#cb10-34"></a><span class="dv">95</span>%</span>
+<span id="cb10-35"><a href="#cb10-35"></a><span class="dv">97</span>%</span>
+<span id="cb10-36"><a href="#cb10-36"></a><span class="dv">98</span>%</span>
+<span id="cb10-37"><a href="#cb10-37"></a><span class="dv">99</span>%</span>
+<span id="cb10-38"><a href="#cb10-38"></a>res.pool &lt;-<span class="st"> </span><span class="kw">pool.lori</span>(res.mi)</span>
+<span id="cb10-39"><a href="#cb10-39"></a><span class="kw">boxplot</span>(res.mi<span class="op">$</span>mi.beta, <span class="dt">pch=</span><span class="st">&quot;&quot;</span>, <span class="dt">names=</span><span class="kw">paste</span>(<span class="st">&quot;col&quot;</span>, <span class="dv">1</span><span class="op">:</span>p))</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAYAAAAUg66AAAAEGWlDQ1BrQ0dDb2xvclNwYWNlR2VuZXJpY1JHQgAAOI2NVV1oHFUUPrtzZyMkzlNsNIV0qD8NJQ2TVjShtLp/3d02bpZJNtoi6GT27s6Yyc44M7v9oU9FUHwx6psUxL+3gCAo9Q/bPrQvlQol2tQgKD60+INQ6Ium65k7M5lpurHeZe58853vnnvuuWfvBei5qliWkRQBFpquLRcy4nOHj4g9K5CEh6AXBqFXUR0rXalMAjZPC3e1W99Dwntf2dXd/p+tt0YdFSBxH2Kz5qgLiI8B8KdVy3YBevqRHz/qWh72Yui3MUDEL3q44WPXw3M+fo1pZuQs4tOIBVVTaoiXEI/MxfhGDPsxsNZfoE1q66ro5aJim3XdoLFw72H+n23BaIXzbcOnz5mfPoTvYVz7KzUl5+FRxEuqkp9G/Ajia219thzg25abkRE/BpDc3pqvphHvRFys2weqvp+krbWKIX7nhDbzLOItiM8358pTwdirqpPFnMF2xLc1WvLyOwTAibpbmvHHcvttU57y5+XqNZrLe3lE/Pq8eUj2fXKfOe3pfOjzhJYtB/yll5SDFcSDiH+hRkH25+L+sdxKEAMZahrlSX8ukqMOWy/jXW2m6M9LDBc31B9LFuv6gVKg/0Szi3KAr1kGq1GMjU/aLbnq6/lRxc4XfJ98hTargX++DbMJBSiYMIe9Ck1YAxFkKEAG3xbYaKmDDgYyFK0UGYpfoWYXG+fAPPI6tJnNwb7ClP7IyF+D+bjOtCpkhz6CFrIa/I6sFtNl8auFXGMTP34sNwI/JhkgEtmDz14ySfaRcTIBInmKPE32kxyyE2Tv+thKbEVePDfW/byMM1Kmm0XdObS7oGD/MypMXFPXrCwOtoYjyyn7BV29/MZfsVzpLDdRtuIZnbpXzvlf+ev8MvYr/Gqk4H/kV/G3csdazLuyTMPsbFhzd1UabQbjFvDRmcWJxR3zcfHkVw9GfpbJmeev9F08WW8uDkaslwX6avlWGU6NRKz0g/SHtCy9J30o/ca9zX3Kfc19zn3BXQKRO8ud477hLnAfc1/G9mrzGlrfexZ5GLdn6ZZrrEohI2wVHhZywjbhUWEy8icMCGNCUdiBlq3r+xafL549HQ5jH+an+1y+LlYBifuxAvRN/lVVVOlwlCkdVm9NOL5BE4wkQ2SMlDZU97hX86EilU/lUmkQUztTE6mx1EEPh7OmdqBtAvv8HdWpbrJS6tJj3n0CWdM6busNzRV3S9KTYhqvNiqWmuroiKgYhshMjmhTh9ptWhsF7970j/SbMrsPE1suR5z7DMC+P/Hs+y7ijrQAlhyAgccjbhjPygfeBTjzhNqy28EdkUh8C+DU9+z2v/oyeH791OncxHOs5y2AtTc7nb/f73TWPkD/qwBnjX8BoJ98VQNcC+8AAAA4ZVhJZk1NACoAAAAIAAGHaQAEAAAAAQAAABoAAAAAAAKgAgAEAAAAAQAAASCgAwAEAAAAAQAAASAAAAAAq0AljQAAHoBJREFUeAHtnQvUFFUBxy8PRVBA8YUCirxSQ1ATAxGBEx4TPWgUIqBJnYjMOHIyskwrBZHSwjTxmG8SHx0xJTUyUkvwgYYFCGIlkjxCFCVEjNRp/lPf1+7s7ux8+83duzP7u+fs2Zl779zH79797537bOH5xmAgAAEIOCDQ0kGcRAkBCEAgIIAAUREgAAFnBBAgZ+iJGAIQQICoAxCAgDMCCJAz9EQMAQggQNQBCEDAGQEEyBl6IoYABBAg6gAEIOCMAALkDD0RQwACCBB1AAIQcEYAAXKGnoghAAEEiDoAAQg4I4AAOUNPxBCAAAJEHYAABJwRQICcoSdiCEAAAaIOQAACzgggQM7QEzEEIIAAUQcgAAFnBBAgZ+iJGAIQQICoAxCAgDMCCJAz9EQMAQggQNQBCEDAGQEEyBl6IoYABBAg6gAEIOCMAALkDD0RQwACCBB1AAIQcEYAAXKGnoghAAEEiDoAAQg4I4AAOUNPxBCAAAJEHYAABJwRQICcoSdiCEAAAaIOQAACzgggQM7QEzEEIIAAUQcgAAFnBBAgZ+iJGAIQQICoAxCAgDMCCJAz9EQMAQggQNQBCEDAGQEEyBl6IoYABBAg6gAEIOCMAALkDD0RQwACCBB1AAIQcEYAAXKGnoghAAEEiDoAAQg4I4AAOUNPxBCAAAJEHYAABJwRQICcoSdiCEAAAaIOQAACzgggQM7QEzEEIIAAUQcgAAFnBBAgZ+iJGAIQQICoAxCAgDMCCJAz9EQMAQggQNQBCEDAGQEEyBl6IoYABBAg6gAEIOCMAALkDD0RQwACCBB1AAIQcEYAAXKGnoghAAEEiDoAAQg4I4AAOUNPxBCAAAJEHYAABJwRQICcoSdiCEAAAaIOQAACzgggQM7QEzEEIIAAUQcgAAFnBBAgZ+iJGAIQQICoAxCAgDMCCJAz9EQMAQggQNQBCEDAGQEEyBl6IoYABBAg6gAEIOCMAALkDD0RQwACCBB1AAIQcEYAAXKGnoghAAEEiDoAAQg4I4AAOUNPxBCAQGsQVEbguuuuMzfeeKPp2LFjZQHwFAQsE9hjjz3Mr371K9O+fXvLMVUefAvPN5U/Xr9PDhgwwMyYMQMBqt8qUPM5Hz58uHn22WdN//79azattIAqLJrWrVubDh06mIEDB1YYAo9BwC6BPn362I0ggdDpA0oAIkFAAAKVEaAFVBk3nqoygYceesjce++9ebF+8MEHZteuXaZdu3Z59ur7uP322/PsuKlNAghQbZYLqQoR6N27tznjjDPybFeuXGkefPBBc+mll+bZ77bbbnn33NQuAQSodsuGlOUQOPLII40+ueZ3v/udeeaZZ8zZZ5+da811igjQB5SiwiKpEMgaAQQoayVKfiCQIgIIUIoKi6RCIGsEEKCslWgd5UdzsG655ZY6ynH2skondPbKtKo5evzxx83SpUvz4nzjjTfMm2++WdBprGUr559/fp7f5tzsueee5rDDDmtOEDzrmAAC5LgA0h79+++/b7Zt25aXjVdffdWsWbPGdOnSJc++ZUsa3HlAuDEIEJWgWQRGjhxp9Mk1v/jFL8z8+fPNVVddlWvNNQQKCPCXVIAECwhAoFoEaAFVizTxxCbw9ttvm4cffris/y1btphXXnnFDB48uKzf7t27myFDhpT1h4fqEkCAqsub2GIQGDt2rHnxxRfNJz/5yUjfH374ofn3v/9t1q9fH+lPjo888oj5y1/+Ynr16lXWLx6qRwABqh7ruolpr732MgceeGDF+dVarm9+85tm6NChFYcRflCd4v/617/C1tw7JoAAhQrghRdeMOpELWdWrVplVqxYYQYNGlTOa925F+uYbgoECcXChQvN6tWrm/JYpN/t27dHuuPohgACFOKurRz233//kG3hbbHh50Jf2FRCQAK0ePHiSh4t+YxaZZjaI4AAhcqkb9++Rp9y5oorrjB77713OW+Zcr/yyivNT37yE9OpU6fE8iVhWLJkiWnTpk1iYRJQegggQOkpK+cpbdh754ADDkgsLePGjTMa9ercuXNjmBKjU045xWjkKimjDc0wtUcAAaq9MqnZFLVq1croFbVHjx6JpXG//fYrCEsCNGzYsEQ7obV3EKb2CDARsfbKhBRBoG4IIEB1U9RkFAK1R4BXsNork0RS9Kc//cn8/e9/zwtr8+bNZufOnQV9K+pMP+mkk/L8cgOBahBAgKpB2UEcv//97422ysg1a9euNZoP069fv1xr07Nnz5oSIJ3kqYmI5Q7Ue++994IO7PCq+7zM/e/mr3/9q2EovhgZt3YIkFv+1mK/8MILjT65RkdJa/LknDlzcq1r7vq2224rSHuxRD7//PPm5z//udEx2eWMOrsPPfTQct5wrzIBBKjKwImuPAGd8xVnhrlaQNrkLI7f8rHiwwUBBKjK1PVqEZ7lqx0EPc8rWD91/PHHm2uvvbbKKSwdnX7wP/3pT4MffWlfTXNRnxSmfgkgQFUu+y9+8YvmM5/5TF6sOsVTq7q//OUv59nX2kxrpfHll1/OS2NzbzSvCFO/BBCgKpf94YcfXhCjJslp/ROvEgVoGi1+/etfB6egNlr4Fxs2bAgWrE6ePDnXOpgsqSUjmNonkHoB0quLNkDXLN0k1yjVftE1PYX6oYpXpUabwF9wwQWJbgQ/Y8aMWMk56KCDzCc+8Yk8vxq906b0Rx11VJ49RzPn4ajpm1QKkP75NPJx3333Bf+CH3zwQQC5Q4cOwRyXESNGmMsvv5xh11DVa+6m8K1btw6G8I8++uhQyJXfKsw4RnEmGW+cOPFjn0C80refjtgxrFu3zpx44ommRYsWZsyYMcG6JLV8dL9161ajuS73339/sCm6Xm30L+nKnHXWWea5554ru9L7rbfeClomEtQoo9bLEUccYRYsWJDnTadSiEuSRhuKhTcVk4BddNFFZXcVfPfdd40+uQtMS6VNrVdWwpeik3371AnQ1VdfHbRyFi1aVLLizpw505x66qlm7ty5QUvIVTE+9thjwahRuVcC/Vg/+ugjoxZclNEWpBMmTCjwMmDAAKORtLBgFHhsgoX2WlbLUq+2DUb9MCtXrmy4Lfkt4ddESG1ZUs7o1WqfffYp5w33jBJInQBpicF5551XUnxUTvrBT5w40Vx//fVOBUivF5oAl1TflIRK/TDFzE033ZRo38wJJ5wQiGKuAGnOTZwN4PWK/NJLL8XyWywv2NUPgdQJkH4Y2sBq0qRJkaWkZQhxpuhHBpISR83PueSSSyJFualZaU5ndVPjwn/9EkidAI0fP95IhLSwUq8j6uPZd999jfon1Af02muvmXnz5plHH33U6DXNpdGPWK9NDZ3kzU2LwipmZK/TSJM06lOLY7Q1bXizdwnirl27Ck5MVRlpnRcGAg0EUidAGglZvny50ZCyXsXUdxI2GgVT/0uSpyqE44hzrx/m6aefHsdrbD+77757bL/V8KhhdM2OzjWasKhPeO3VIYccEpRdrl+u65tA6gRIxaWzndTRqX9ZbTmhVo8q/MEHH2y6du0atIjqqVi1dkr7NSv/SZkvfelLsYKSAMWdyxMrQDzVFYFUClBDCak1IDGq5cPm9NoR93WmIV+lvkv1y2gYW/Oeyu3VrFcjCbU6k8sZvdYp7RgI2CSQagGKAqN9bzQK1bZt2yhvBW467+s3v/lNgX3YolgfR9iP1jlpTlKSo2CjRo0KR2O0LYX6xHLNU089FZwEmmunM890nLGmKOQajdSFw9XQeO4IWK5/rptPQKe0ho+f1iu7ToQdOHBgQQRaJ1hqBLTAc4osMitA6m84+eSTYx0ymFteGup+/fXXc62KXqs1klTnctEImmCpihneKF4TINXiyTVa3KopCmF79aOFn899juvkCWgXgHA905+mBk+Kjd4W6+tMPlXVDzGzAjRlyhTTu3fvJhPVFhj6lDM333xzTfc16bgbfTDuCejPKiw2+jOYOnVqXuI2btwYnGEftpcnHV2kT4NR90OcmeYN/mv1O7MCFGcWbq0WCunKFoE777zTfOELXzCa9R1l1O8mkSn2ChZ+btOmTWbZsmXmmGOOCTul6j71AqR/l1pdDa81XrNmzYrV6Run1qjZvmPHjjhe8VNDBLQN7te+9jVz7rnnJpaqb33rW8HoLwKUGNL4AaVlNfzq1avN008/XTZjDbsCxukwnz17dtnw8FBbBNSyUd+OhCgpk/TE06TS1dRwUtcCStNqeG0+VmwDsnAhaR6NRkCmT58eduI+AwTUgSzBSFI0sjIiljoBStNq+Az8dsgCBKwSSJ0ApWk1vNWSI/DUENB8tJEjRya6NOiee+5JTf6jEpo6AWI1fFRx4laLBDQTXvOshg0blljyFi5cmFhYLgNKnQClaTW8y4IlbgikgUDqBChNq+GLVYBi54KtX78+WNWvBba5ptbOBctNG9fxCTRMRLz11lvjP1TGp6aeZMGkToAEPc2r4YudC6b1WRopCW+pWmvngmWhwrvIg+aCabFwUouSlQdtyBc+X85F3pobZyoFqCHTaVgN35DWhu84w/INfvnOBgHVU22XgikkwH4LhUywgQAEqkQAAaoSaKKBQBwCWV31XirvCFApMthDoMoEtGK+e/fuVY7VbXQIkFv+xA6BuiaAANV18ZN5CLglgAC55U/sEKhrAghQXRc/mYeAWwKpngfkFh2xQ6ByAs8884zRzg65Rnt1a4bz6NGjc62Da82i1kEBWTMIUNZKlPykgoAObQzvkKg9obT8ptguhzr7LYsGAcpiqZKnigmoFfLOO+/kPa/TT7Zt21b0EIJKD4PUc1lYSpEHqoIbBCgEbe3atWbp0qUh28JbHfCnI3ww2SLwwAMPmIsvvjgvUyprbRZf7OBHncqro44wlRFAgELcdNTzL3/5y5Bt4a32+Q2fr1XoC5u0ETjnnHOMPrlGm+DpVAsdGohJlgACFOI5dOjQWDvXtW/fvug/Yig4biEAgQgCDMNHwMEJAhCwSwABssuX0CEAgQgCCFAEHJwgAAG7BBAgu3wJPQMEevfube64444M5KT2soAA1V6ZkKIaI6BDAPv3719jqcpGchCgbJQjuYBAKgkwDJ/KYiPRSRDYtGlTsFezDg5MynTr1s1MnTrVtGrVKqkgMx0OLaBMFy+ZiyIwbdq0gmUXUf7juH3jG98wS5YsieMVPz6B5KQfnBBIGQG1UtRiGTVqVGIpX7x4cWJh1UNAqW8B6dA3nau1devWeigv8giBTBFIpQBt2LAhWDCoDbx15pIWCe67776mY8eOwWjFRRddxELRTFVTMpNVAql7BVu3bp058cQTg1Mmx4wZY3r06GE6deoU3KsVpNXs999/v5k/f77RUcc9e/bMatmRLwiknkDqBEi7yKnls2jRItOmTZuiBTBz5kxz6qmnmrlz5wZH4hb1hCUEIOCcQOpewbQ1wuc///mS4iOi2p9l4sSJZuHChc4BkwAIQKA0gdS1gE444YRgmHPSpEmlc+W7PP7446ZLly6RfnCsbwLaaExD5m+99VZiIBgMaRrK1AnQ+PHjjURo8+bNZsKECUEfjzqgW7ZsGYyEaYe6efPmmUcffTR4TWsaDnzXEwHtwfzkk08Gn6TyrX2iMPEJpE6Ajj76aLN8+XIzefJkc95555liZ2mPGDHCPPbYY7E2FouPCp8QgEDSBFInQALQq1evYIRr165dRluoqtWj5rQ2+u7atWvRzcOTBkd46SegKRyDBw82Wu2elHniiSeSCqouwkmlADWUjCqQxEifsNm+fbvRGp+2bduGnbiHQEBA9WfYsGGJzoResWIFdJtAIHWjYHHzdsghhwSvaHH94w8CEKg+gVS3gKJwTZkyJdGmdVRcuEEAApURyKwAXXHFFRUR0ejamjVryj6rY3l27txZ1h8eIACB0gQyK0ClsxztsmzZMjNr1qxoT76rTst8//33y/rDAwQgUJoAAhRioyUc+pQzgwYNMkOGDCnnDfcaJqCdFDSSqo3JkjIajcXEJ4AAxWeFz4wROO2008zZZ59t7r777sic6XV7x44dpkOHDpH+5KjR14997GNl/eHhvwRSJ0DHHXecWbVqVazyGz16tLnrrrti+cVT/REYO3as0aec0fpDrS3UNyZZAqkToNmzZ5vPfvazQdP50ksvDZZglELSp0+fUk7YQwACNUAgdQKkfhdte6klGWoaaw9eDAQgkE4CqZyIqJbN9OnTzYwZMxJdyZzOIiTVtgloU7sbbrjBdjR1GX7qWkANpaSjT4499tigFdRgxzcEbBDQCnetGcMkTyC1AqQTDYYPH548EUKEAASqRiCVr2BVo0NEEICAVQKZESAtn+jbty9DpVarC4FDIFkCmREgLYt46aWXzHvvvZcsIUKrewLaZnXBggV1z8EGgMwIkA04hAkBEdCmd9/97neBYYEAAmQBKkFCAALxCGRGgDp37my0BYc2IsNAAALpIJDaYfgw3gMPPNBcdtllYWvuIQCBGiaQGQGqYcYkLUUEnn322eBY79wkb9myxbzxxhtm2rRpudbBtfaO0pw0TGUEEKDKuPFURgm0a9fOqDWda3SvKR7FTIsWLYpZYxeTAAIUExTe6oNAv379jD6Y6hDITCd0dXARCwQgkCQBWkAV0tSxvjqE7o9//GOFIfz/seeee85s3LjR+oGK27ZtC/ZR2n///f8fuYWrd9991+ijkUmbRpNO3377bdOlSxeb0RiVtfqAunXrZjUe7TOuQxHGjRuXSDxpOKceAaqwqOfMmWPuuOOO4PDDCoNofOz5558PzrUP9z00ekjoQhVSM8Z1gqxNI6H75z//GYiDzXgkcuogVlw2jZitX78+EFWb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" /><!-- --></p>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

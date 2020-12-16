@@ -2,7 +2,11 @@
 % Please edit documentation in R/mi.lori.R
 \name{mi.lori}
 \alias{mi.lori}
-\title{multiple imputation of count data using the lori model}
+\title{The mi.lori performs M multiple imputations using the
+lori method. Multiple imputation allows to produce estimates of missing
+values, as well as intervals of variability. The classical
+procedure is to perform M multiple imputations using the mi.lori
+method, and to aggregate them using the pool.lori method.}
 \usage{
 mi.lori(
   Y,
@@ -58,7 +62,11 @@ mi.lori(
 \item{Y}{original incomplete count table}
 }
 \description{
-multiple imputation of count data using the lori model
+The mi.lori performs M multiple imputations using the
+lori method. Multiple imputation allows to produce estimates of missing
+values, as well as intervals of variability. The classical
+procedure is to perform M multiple imputations using the mi.lori
+method, and to aggregate them using the pool.lori method.
 }
 \examples{
 X <- matrix(rnorm(50), 25)
