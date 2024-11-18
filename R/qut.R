@@ -2,11 +2,11 @@
 #' @param Y A matrix of counts (contingency table).
 #' @param cov A (np)xK matrix of K covariates about rows and columns
 #' @param lambda2 A positive number, the regularization parameter for covariates main effects
-#' @param q A number between \code{0} and \code{1}. The quantile of the distribution of $lambda_{QUT}$ to take.
+#' @param q A number between 0 and 1. The quantile of the distribution of lambdaQUT to take.
 #' @param N An integer. The number of parametric bootstrap samples to draw.
 #' @param reff [boolean] whether row effects should be fitted, default value is TRUE
 #' @param ceff [boolean] whether column effects should be fitted, default value is TRUE
-#' @return the value of $lambda_{QUT}$ to use in LoRI.
+#' @return the value of lambdaQUT to use in LoRI based on QUT method.
 #' @export
 #' @examples
 #' X = matrix(rnorm(30), 15)

@@ -65,6 +65,9 @@ A list with the following elements
 \item{imputed}{nxp matrix of imputed counts}
 \item{means}{nxp matrix of expected counts (exp(X))}
 \item{cov}{npxK matrix of covariates}
+\item{nparam}{number of estimated parameters in the model}
+\item{dfres}{residual degrees of freedom}
+\item{chisq}{sum of squared deviations between observed and expected counts normalized by the expected value}
 }
 \description{
 The lori method implements a method to analyze and impute

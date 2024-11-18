@@ -1,4 +1,4 @@
-## ---- include = FALSE---------------------------------------------------------
+## ----include = FALSE----------------------------------------------------------
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -23,11 +23,11 @@ U <- scale(U)
 
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  U <- covmat(n, p, R)
-#  U <- covmat(n, p, C)
-#  U <- covmat(n, p, R, C)
-#  U <- covmat(n, p, R=R, E=E)
-#  U <- covmat(n, p, C=C, E=E)
+# U <- covmat(n, p, R)
+# U <- covmat(n, p, C)
+# U <- covmat(n, p, R, C)
+# U <- covmat(n, p, R=R, E=E)
+# U <- covmat(n, p, C=C, E=E)
 
 ## ----simulate parameters------------------------------------------------------
 ## parameters

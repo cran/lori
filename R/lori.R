@@ -33,6 +33,9 @@
 #' \item{imputed}{nxp matrix of imputed counts}
 #' \item{means}{nxp matrix of expected counts (exp(X))}
 #' \item{cov}{npxK matrix of covariates}
+#' \item{nparam}{number of estimated parameters in the model}
+#' \item{dfres}{residual degrees of freedom}
+#' \item{chisq}{sum of squared deviations between observed and expected counts normalized by the expected value}
 #' @examples
 #' \dontshow{
 #' X <- matrix(rnorm(50), 25)
@@ -101,10 +104,14 @@ lori <-
     beta <- res$beta
     epsilon <- res$epsilon
     theta <- res$theta
-    #imputed <- matrix(rpois(n*p, lambda=c(exp(X))), nrow=n)
     imputed <- round(exp(X))
     imputed[!is.na(Y)] <- Y[!is.na(Y)]
     means <- exp(X)
+    nparam <- sum(abs(alpha)>0) + sum(abs(beta)>0) + sum(abs(epsilon)>0)
+    r <- min(sum(abs(svd(theta)$d)>0), rank.max)
+    nparam <- nparam + r*(nrow(Y) + ncol(Y) - r)
+    dfres <- sum(!is.na(Y)) - nparam
+    chisq <- sum((Y - means)^2/means, na.rm=T)
     res2 <-
       structure(
         list(
@@ -117,7 +124,10 @@ lori <-
           imputed = imputed,
           means = means,
           cov = cov,
-          objective=res$objective
+          objective=res$objective,
+          nparam=nparam,
+          dfres=dfres,
+          chisq=chisq
         )
       )
     class(res2) <- c("lori", "list")

@@ -26,6 +26,9 @@
 #' \item{mi.theta}{a list of length M containing the estimated interaction matrices}
 #' \item{mi.mu}{a list of length M containing the estimated Poisson means}
 #' \item{mi.y}{list of bootstrapped count tables used fot multiple imputation}
+#' \item{mi.nparam}{a list of length M containing the number of estimated parameters in each bootstrap sample}
+#' \item{mi.dfres}{a list of length M containing the residual degrees of freedom in each bootstrap sample}
+#' \item{mi.chisq}{a list of length M containing the sum of squared deviations between observed and expected counts normalized by the expected value in each bootstrap sample}
 #' \item{Y}{original incomplete count table}
 
 #' @export
@@ -130,6 +133,12 @@ mi.lori <-   function(Y,
   colnames(mi.epsilon) <- colnames(cov)
   mi.theta <- lapply(reslist, function(res)
     res$theta)
+  mi.nparam <- lapply(reslist, function(res)
+    res$nparam)
+  mi.dfres <- lapply(reslist, function(res)
+    res$dfres)
+  mi.chisq <- lapply(reslist, function(res)
+    res$chisq)
   return(
     list(
       mi.imputed = mi.imputed,
@@ -138,6 +147,9 @@ mi.lori <-   function(Y,
       mi.epsilon = mi.epsilon,
       mi.theta = mi.theta,
       mi.y = ylist,
+      mi.nparam = mi.nparam,
+      mi.dfres = mi.dfres,
+      mi.chisq = mi.chisq,
       Y = Y
     )
   )

@@ -13,7 +13,7 @@ qut(Y, cov, lambda2 = 0, q = 0.95, N = 100, reff = T, ceff = T)
 
 \item{lambda2}{A positive number, the regularization parameter for covariates main effects}
 
-\item{q}{A number between \code{0} and \code{1}. The quantile of the distribution of $lambda_{QUT}$ to take.}
+\item{q}{A number between 0 and 1. The quantile of the distribution of lambdaQUT to take.}
 
 \item{N}{An integer. The number of parametric bootstrap samples to draw.}
 
@@ -22,7 +22,7 @@ qut(Y, cov, lambda2 = 0, q = 0.95, N = 100, reff = T, ceff = T)
 \item{ceff}{[boolean] whether column effects should be fitted, default value is TRUE}
 }
 \value{
-the value of $lambda_{QUT}$ to use in LoRI.
+the value of lambdaQUT to use in LoRI based on QUT method.
 }
 \description{
 automatic selection of nuclear norm regularization parameter
